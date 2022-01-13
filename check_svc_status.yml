@@ -1,0 +1,28 @@
+---
+- name: Check service status
+  hosts: localhost
+  gather_facts: true
+
+  vars:
+    services_name: /etc/systemd/system/uniagent.service
+
+  tasks:
+  - name: Check if Service Exists
+    stat: 
+      path: "{{ services_name }}"
+    register: services_status
+ 
+  - name: debug
+    debug:
+      var: services_status
+
+  - name: debug if not exist
+    debug:
+      msg: "Not exist"
+    when: not services_status.stat.exists
+
+  - name: debug if exist
+    debug:
+      msg: "Exist"
+    when: services_status.stat.exists
+

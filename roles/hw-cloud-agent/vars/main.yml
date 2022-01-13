@@ -1,0 +1,16 @@
+---
+# vars file for hw-cloud-agent
+
+ap_bangkok_ns:
+  - nameserver 100.125.1.250
+  - nameserver 182.50.80.4
+
+services_name: /etc/systemd/system/uniagent.service
+
+# "cd /usr/local && curl -k -O https://obs.ap-southeast-2.myhuaweicloud.com/uniagent-ap-southeast-2/script/agent_install.sh && bash agent_install.sh"
+target_dir: "/usr/local"
+
+agent_download: "curl -k -O https://obs.ap-southeast-2.myhuaweicloud.com/uniagent-ap-southeast-2/script/agent_install.sh"
+
+agent_file: "agent_install.sh"
+

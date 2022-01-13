@@ -1,0 +1,28 @@
+---
+# tasks file for hw-cloud-agent
+
+#- name: Edit the /etc/resolve.conf file
+#  lineinfile:
+#    path: /home/sirius/test.txt
+#    line: "{{ item }}"
+#    backup: yes
+#  loop: "{{ ap_bangkok_ns }}"
+
+
+- name: Check if Service Exists
+  stat:
+    path: "{{ services_name }}"
+  register: services_status
+
+- name: Download huawei cloud agent to target directory
+  command: "{{ agent_download }}"
+  args:
+    chdir: "{{ target_dir }}"
+  register: download_result
+  when: not services_status.stat.exists
+
+- name: Install huawei cloud agent
+  command: "bash {{ target_dir }}/{{ agent_file }}"
+  args:
+    chdir: "{{ target_dir }}"
+  when: not services_status.stat.exists and download_result.rc == 0
